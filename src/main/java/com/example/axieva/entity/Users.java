@@ -1,6 +1,7 @@
 package com.example.axieva.entity;
 
 import com.example.axieva.common.enums.UserType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,6 +17,8 @@ public class Users {
     private long id;
 
     private String emailId;
+
+    @JsonIgnore
     private String password;
 
     @Enumerated(value = EnumType.STRING)

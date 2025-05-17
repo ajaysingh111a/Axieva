@@ -9,7 +9,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -42,6 +41,25 @@ public class UserController {
         catch (Exception e){
             System.out.println(e);
             return new ResponseEntity<>("Failed to login", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/dashboard")
+    public ResponseEntity dashboard(@AuthenticationPrincipal UserPrincipal userPrincipal){
+
+        /*
+        dashboard api returning the current user details based on the email id,
+        * if the same api is hit by admin then we will be getting both student and teacher
+        * if hit by the teachers then will be getting all the students
+        */
+
+        try{
+            Object allUsers = userInterface.dashboard(userPrincipal);
+            return new ResponseEntity<>(allUsers, HttpStatus.OK);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

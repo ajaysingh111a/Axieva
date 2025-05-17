@@ -9,4 +9,6 @@ public interface UserInterface {
     void createUser(Map<String, Object> map, UserPrincipal userPrincipal) throws Exception;
 
     String loginUser(Map<String, String> login) throws Exception;
+
+    Object dashboard(UserPrincipal userPrincipal) throws Exception;
 }

@@ -73,4 +73,22 @@ public class UserService implements UserInterface {
         String jwt = jwtUtil.generateToken(userDetails);
         return jwt;
     }
+
+    @Override
+    public Object dashboard(UserPrincipal userPrincipal) throws Exception {
+
+        String emailId = userPrincipal.getUsername();
+        UserType currentType = userPrincipal.getUserType();
+
+        if(currentType.equals(UserType.ADMIN)){
+            return userRepository.findAll();
+        }
+        else if(currentType.equals(UserType.TEACHER)){
+            return userRepository.findAllStudents();
+        }
+        else if(currentType.equals(UserType.STUDENT)){
+            return userRepository.findByEmailId(emailId);
+        }
+        throw new Exception("User not found");
+    }
 }
